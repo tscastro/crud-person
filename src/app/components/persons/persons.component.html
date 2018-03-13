@@ -1,0 +1,92 @@
+<form (ngSubmit)="savePerson(person)" class="well well-sm" [formGroup]="form">
+  <div class="form-group">
+      <div class="row">
+        <div class="form-group col-md-4" [ngClass]="displayFieldCss('name')">
+            <label for="creditLimit" class="control-label required">Nome</label>
+            <input type="text" class="form-control"  id="name" formControlName="name" [(ngModel)]="person.name">
+            <app-field-error-display 
+              [displayError]="isFieldValid('name')" 
+              errorMsg="O campo Nome] e obrigatorio">
+            </app-field-error-display>
+          </div>
+          
+          <div class="form-group col-md-2" [ngClass]="displayFieldCss('creditLimit')">
+            <label for="creditLimit" class="control-label required">Limite de credito</label>
+            <input currencyMask class="form-control"  id="creditLimit" formControlName="creditLimit" [(ngModel)]="person.creditLimit">
+            <app-field-error-display 
+              [displayError]="isFieldValid('creditLimit')" 
+              errorMsg="O campo [Limite de credito] e obrigatorio">
+            </app-field-error-display>
+          </div>
+         
+          <div class="form-group col-md-1" [ngClass]="displayFieldCss('risk')">
+            <label for="risk" class="control-label required">Risco</label>
+            <select [(ngModel)]="person.risk" class="form-control" formControlName="risk">
+                <option *ngFor="let c of risks" [ngValue]="c.name"> {{c.name}} </option>
+            </select>
+            <app-field-error-display 
+              [displayError]="isFieldValid('risk')" 
+              errorMsg="O campo [Risco] e obrigatorio">
+            </app-field-error-display>
+          </div>
+          
+          <div class="form-group col-md-5" [ngClass]="displayFieldCss('shortAddress')">
+            <label for="shortAddress" class="control-label required">Endereco</label>
+            <input type="text" class="form-control" id="shortAddress" formControlName="shortAddress" [(ngModel)]="person.shortAddress">
+            <app-field-error-display 
+              [displayError]="isFieldValid('shortAddress')" 
+              errorMsg="O campo [Endereco] e obrigatorio">
+            </app-field-error-display>
+          </div>
+      </div>
+      <div id="actions" class="row">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Salvar</button>
+          <a href="index.html" class="btn btn-default">Cancelar</a>
+        </div>
+      </div>
+  </div>
+</form>
+<div>
+    <div class="row">
+        <div class="col-md-4" title="Nome">
+          <h4>Nome</h4>
+        </div>
+        <div class="col-md-2" title="Limite de credito">
+            <h4>Limite de credito</h4>
+        </div>
+        <div class="col-md-1" title="Risco">
+            <h4>Risco</h4>
+        </div>
+        <div class="col-md-4" title="Endereco">
+            <h4>Endereco</h4>
+        </div>
+      </div>
+</div>
+<hr/>
+<div>
+    <div *ngFor="let person of persons">
+        <div class="row">
+          <div class="col-md-4" title="Nome">
+            {{person.name}}
+          </div>
+          <div class="col-md-2" title="Limite de credito">
+              {{person.creditLimit | currency : 'R$'}}            
+          </div>
+          <div class="col-md-1" title="Risco">
+              {{person.risk}}
+          </div>
+          <div class="col-md-4" title="Endereco">
+              {{person.shortAddress}}
+          </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-default btn-sm" (click)="updatePerson(person)" title="Alterar">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>         
+            <button type="button" class="btn btn-default btn-sm" (click)="deletePerson(person.id)" title="Excluir">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+        </div>
+    </div>
+</div>
